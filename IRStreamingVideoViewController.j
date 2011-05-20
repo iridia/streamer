@@ -59,13 +59,10 @@
 	
 	[self setView:[[CPView alloc] initWithFrame:CGRectMake(0, 0, 512, 512)]];
 	[[self view] setAutoresizingMask:CPViewWidthSizable|CPViewHeightSizable];	
-//	[[self view] setBackgroundColor:[CPColor redColor]];
 	
 }
 
 - (void) beginBroadcastingFromUStreamChannelNamed:(CPString)aChannelName withAPIKey:(CPString)anAPIKey {
-	
-	//	https://mipush.com/api/#{methodName}?#{methodArguments}
 	
 	[engine fireAPIRequestNamed:@"getEmbedTag" withArguments:[CPDictionary dictionaryWithObjectsAndKeys:
 	
@@ -80,38 +77,27 @@
 		var tempDiv = document.createElement('div');
 		tempDiv.innerHTML = html;
 		
-		console.log(html);
+		var embedTag = tempDiv.getElementsByTagName("embed"), flashTag = embedTag[0];
 		
-		var embedTag = tempDiv.getElementsByTagName("embed");
-		var flashTag = embedTag[0];
-		
-		var flashSource = flashTag.getAttribute("src");
-		var flashVars = flashTag.getAttribute("flashvars");
-		
-		var actualFlashVars = [CPMutableDictionary dictionary];
-		
-		var actualMovie = [CPFlashMovie flashMovieWithFile:flashSource];
 		var actualView = [[IRFlashView alloc] initWithFrame:CGRectMake(0, 0, 512, 512)];
 		[actualView setParameters:[CPDictionary dictionaryWithObjectsAndKeys:
 		
 			@"true", @"allowfullscreen",
 			@"always", @"allowscriptaccess",
-			flashVars, @"flashvars"
+			flashTag.getAttribute("flashvars"), @"flashvars"
 		
 		]];
 		
-		CPLog(@"pa %@", [actualView parameters]);
-		
-		
-		[actualView setFlashMovie:actualMovie];
+		[actualView setFlashMovie:[CPFlashMovie flashMovieWithFile:flashTag.getAttribute("src")]];
 		[actualView setFrame:[[self view] bounds]];
 		[actualView setBackgroundColor:[CPColor blackColor]];
 		[actualView setAutoresizingMask:CPViewWidthSizable|CPViewHeightSizable];
+		
 		[[self view] addSubview:actualView];
 		
-	} failure:function(){
+	} failure:function () {
 		
-		CPLog(@"Fail.");
+		CPLog(@"Fail!");
 		
 	}];
 	
