@@ -2,15 +2,16 @@
 		
 @import <AppKit/AppKit.j>
 @import "IRStreamingVideoViewController.j"
+@import "IRStreamerTwitterStreamViewController.j"
 
 var sidebarWidth = 224;
 
 @implementation IRStreamerBaseViewController : CPViewController {
 		
 	CPSplitView splitView;
-	IRTableViewController tableViewController;
 	
 	IRStreamingVideoViewController streamingVideoController;
+	IRStreamerTwitterStreamViewController twitterStreamViewController;
 	
 }
 
@@ -20,6 +21,7 @@ var sidebarWidth = 224;
 	if (!self) return nil;
 	
 	streamingVideoController = [[IRStreamingVideoViewController alloc] init];
+	twitterStreamViewController = [[IRStreamerTwitterStreamViewController alloc] init];
 	
 	return self;
 	
@@ -38,7 +40,8 @@ var sidebarWidth = 224;
 	
 	[streamingVideoController beginBroadcastingFromUStreamChannelNamed:@"nied-kyoshin01" withAPIKey:@"869AAF2EAB4DC4926A6A62396A68FADB"];
 	
-	var rightView = [[CPView alloc] initWithFrame:CGRectMake(0, 0, sidebarWidth, 512)];
+	var rightView = [twitterStreamViewController view];
+	[rightView setFrame:CGRectMake(0, 0, sidebarWidth, 512)];
 	[splitView addSubview:rightView];
 	
 }
