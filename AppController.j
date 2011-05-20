@@ -7,10 +7,9 @@
  */
 
 @import <Foundation/CPObject.j>
+@import "IRStreamerBaseViewController.j"
 
-
-@implementation AppController : CPObject
-{
+@implementation AppController : CPObject {
 }
 
 - (void)applicationDidFinishLaunching:(CPNotification)aNotification
@@ -18,17 +17,10 @@
     var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask],
         contentView = [theWindow contentView];
 
-    var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
-
-    [label setStringValue:@"Hello World!"];
-    [label setFont:[CPFont boldSystemFontOfSize:24.0]];
-
-    [label sizeToFit];
-
-    [label setAutoresizingMask:CPViewMinXMargin | CPViewMaxXMargin | CPViewMinYMargin | CPViewMaxYMargin];
-    [label setCenter:[contentView center]];
-
-    [contentView addSubview:label];
+	var rootVC = [[IRStreamerBaseViewController alloc] init];
+	[[rootVC view] setAutoresizingMask:CPViewWidthSizable|CPViewHeightSizable];
+	[[rootVC view] setFrame:[contentView bounds]];
+    [contentView addSubview:[rootVC view]];
 
     [theWindow orderFront:self];
 
