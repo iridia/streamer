@@ -46,7 +46,7 @@
 	
 	[self willChangeValueForKey:@"objectValue"];
 	objectValue = anObject;
-	[label setStringValue:[CPString stringWithFormat:@"%@", anObject]];
+	[label setStringValue:[CPString stringWithFormat:@"%@", [anObject valueForKeyPath:@"text"]]];
 	[self didChangeValueForKey:@"objectValue"];
 
 }

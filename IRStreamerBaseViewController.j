@@ -39,6 +39,7 @@ var sidebarWidth = 224;
 	[splitView addSubview:leftView];
 	
 	[streamingVideoController beginBroadcastingFromUStreamChannelNamed:@"nied-kyoshin01" withAPIKey:@"869AAF2EAB4DC4926A6A62396A68FADB"];
+	[twitterStreamViewController beginStreamingWithTerms:@"#PP17 OR from:punchparty OR from:OOBE"];
 	
 	var rightView = [twitterStreamViewController view];
 	[rightView setFrame:CGRectMake(0, 0, sidebarWidth, 512)];
