@@ -1,10 +1,11 @@
 //	IRTwitterStreamDataView.j
 
 @import <AppKit/AppKit.j>
+@import "IRDOMTextView.j"
 
 @implementation IRTwitterStreamDataView : CPView {
 	
-	CPTextField label @accessors;
+	IODOMTextView textView @accessors;
 	id objectValue @accessors;
 	
 }
@@ -33,10 +34,10 @@
 
 - (void) mnConfigure {
 	
-	[self setLabel:[CPTextField labelWithTitle:nil]];
-	[[self label] setFrame:[self bounds]];
-	[[self label] setAutoresizingMask:CPViewWidthSizable|CPViewHeightSizable];
-	[self addSubview:[self label]];
+	textView = [[IRDOMTextView alloc] initWithFrame:[self bounds]];
+	[textView setFont:[CPFont systemFontOfSize:13]];
+	[textView setAutoresizingMask:CPViewWidthSizable|CPViewHeightSizable];
+	[self addSubview:textView];
 	
 }
 
@@ -46,7 +47,7 @@
 	
 	[self willChangeValueForKey:@"objectValue"];
 	objectValue = anObject;
-	[label setStringValue:[CPString stringWithFormat:@"%@", [anObject valueForKeyPath:@"text"]]];
+	[textView setContentHTMLString:[CPString stringWithFormat:@"%@", [anObject valueForKeyPath:@"text"]]];
 	[self didChangeValueForKey:@"objectValue"];
 
 }
@@ -71,6 +72,16 @@
 	[self setSelected:[self hasThemeState:CPThemeStateSelectedDataView] animated:NO];
 	return superAllowed;
 
+}
+
++ (CGFloat) preferredRowHeightForObject:(id)anObject width:(CGFloat)aWidth {
+	
+	CPLog(@"anObject %@", anObject);
+	
+	var bodySize = [IRDOMTextView sizeWithString:[anObject valueForKeyPath:@"text"] font:[CPFont systemFontOfSize:13.0] width:(aWidth || 0)];
+	
+	return (bodySize && bodySize.height || 0) + 16;
+	
 }
 
 @end

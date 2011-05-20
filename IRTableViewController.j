@@ -36,7 +36,6 @@
 - (void) irConfigure {
 	
 	[self setArrayController:[[CPArrayController alloc] init]];
-	//	[self setDataViewPrototype:[[MNSampleDataView alloc] init]];
 	
 }
 
@@ -70,6 +69,15 @@
 	
 }
 
+- (void) viewDidLoad {
+	
+		[super viewDidLoad];
+	
+	[[self view] setPostsFrameChangedNotifications:YES];
+	[[CPNotificationCenter defaultCenter] addObserver:self selector:@selector(handleViewFrameDidChange:) name:CPViewFrameDidChangeNotification object:[self view]];
+	
+}
+
 - (int) numberOfRowsInTableView:(CPTableView)inTableView {
 		
 	return [[arrayController arrangedObjects] count] || 0;
@@ -80,6 +88,21 @@
 	
 	return [[arrayController arrangedObjects] objectAtIndex:inRow];
 
+}
+
+- (void) handleViewFrameDidChange:(CPNotification)aNotification {
+	
+	[[self tableView] noteHeightOfRowsWithIndexesChanged:[CPIndexSet indexSetWithIndexesInRange:CPMakeRange(0, [[self tableView] numberOfRows])]];
+	
+}
+
+- (CGFloat) tableView:(CPTableView)aTableView heightOfRow:(int)row {
+	
+	//	This is flaky and seem very filmsy, but at least it delegates work to the right thing
+	
+	var column = [aTableView tableColumnWithIdentifier:@"column"];
+	return [[[column dataView] class] preferredRowHeightForObject:[self tableView:aTableView objectValueForTableColumn:column row:row] width:[aTableView bounds].size.width];
+	
 }
 
 @end
