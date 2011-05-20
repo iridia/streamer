@@ -1,0 +1,12 @@
+[submodule "Frameworks/IRWebAPIKit"]
+	path = Frameworks/IRWebAPIKit
+	url = https://github.com/iridia/IRWebAPIKit
+[submodule "Frameworks/IRBlockEnumeration"]
+	path = Frameworks/IRBlockEnumeration
+	url = git://github.com/iridia/IRBlockEnumeration.git
+[submodule "Frameworks/IRDelegation"]
+	path = Frameworks/IRDelegation
+	url = git://github.com/iridia/IRDelegation.git
+[submodule "Frameworks/CPObject-DelayedPerforming"]
+	path = Frameworks/CPObject-DelayedPerforming
+	url = git://github.com/monoceroi/CPObject-DelayedPerforming.git
