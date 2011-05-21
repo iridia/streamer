@@ -70,7 +70,6 @@ var sidebarVideoHeight = 178;
 	
 	[rightSplitView setDelegate:self];
 	
-	
 	[streamingVideoController beginBroadcastingFromUStreamChannelNamed:@"punchparty" withAPIKey:@"869AAF2EAB4DC4926A6A62396A68FADB"];
 	[altStreamingVideoController beginBroadcastingFromUStreamChannelNamed:@"machinima-live-stream" withAPIKey:@"869AAF2EAB4DC4926A6A62396A68FADB"];
 	[twitterStreamViewController beginStreamingWithTerms:@"#PP17 OR from:punchparty OR from:OOBE"];
@@ -82,7 +81,6 @@ var sidebarVideoHeight = 178;
 }
 
 - (IBAction) handleToggle:(id)sender {
-	CPLog(@"toggle");
 	
 	window.setTimeout(function(){
 	
@@ -114,11 +112,8 @@ var sidebarVideoHeight = 178;
 	if (aSplitView == mainSplitView)	
 	return [mainSplitView bounds].size.width - sidebarWidth;
 
-	if (aSplitView == rightSplitView)	{
-	
-		return [rightSplitView bounds].size.height - sidebarVideoHeight;
-	
-	}
+	if (aSplitView == rightSplitView)
+	return [rightSplitView bounds].size.height - sidebarVideoHeight;
 
 	return proposedPosition;
 }
