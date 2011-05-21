@@ -23,6 +23,17 @@ IRDOMTextView_LayoutView = nil;
 	
 }
 
+- (id) initWithCoder:(CPCoder)aDecoder {
+	
+	self = [super initWithCoder:aDecoder];	
+	if (!self) return nil;
+	
+	[self setContentHTMLString:nil];
+	
+	return self;
+	
+}
+
 - (id) contentWrapper {
 	
 	if (!contentWrapper) {

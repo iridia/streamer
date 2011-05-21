@@ -27,6 +27,8 @@
 	[super loadView];
 	
 	[[self tableView] setSelectionHighlightStyle:CPTableViewSelectionHighlightStyleNone];
+	[[self tableView] setGridStyleMask:CPTableViewGridNone];
+	[[self tableView] setUsesAlternatingRowBackgroundColors:YES];
 	
 }
 
@@ -42,7 +44,7 @@
 			if (![resp count])
 			return;
 			
-			var keepsOffset = [[[self arrayController] arrangedObjects] count] > 0;			
+			var keepsOffset = [[[self arrayController] arrangedObjects] count] && ([[[self scrollView] contentView] boundsOrigin].y > 8);
 			var reload = function () {
 				[[self arrayController] addObjects:resp];
 				[[self tableView] reloadData]; // TBD handle this gracefully memorizing offset et al in the future

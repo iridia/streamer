@@ -1,6 +1,6 @@
 /*
  * Jakefile
- * app
+ * streamer
  *
  * Created by Evadne Wu on May 19, 2011.
  * Copyright 2011, Monoceros All rights reserved.
@@ -20,11 +20,11 @@ app ("app", function(task)
     task.setBuildIntermediatesPath(FILE.join("Build", "app.build", configuration));
     task.setBuildPath(FILE.join("Build", configuration));
 
-    task.setProductName("app");
-    task.setIdentifier("com.monoceros.app");
+    task.setProductName("streamer");
+    task.setIdentifier("com.iridia.streamer");
     task.setVersion("1.0");
-    task.setAuthor("Monoceros");
-    task.setEmail("hi@monoceroi.com");
+    task.setAuthor("Evadne Wu");
+    task.setEmail("ev@iridia.tw");
     task.setSummary("app");
     task.setSources((new FileList("**/*.j")).exclude(FILE.join("Build", "**")));
     task.setResources(new FileList("Resources/**"));
