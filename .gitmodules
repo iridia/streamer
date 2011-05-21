@@ -10,3 +10,6 @@
 [submodule "Frameworks/CPObject-DelayedPerforming"]
 	path = Frameworks/CPObject-DelayedPerforming
 	url = git://github.com/monoceroi/CPObject-DelayedPerforming.git
+[submodule "Frameworks/IRInterfaceKit"]
+	path = Frameworks/IRInterfaceKit
+	url = git://github.com/iridia/IRInterfaceKit.git
