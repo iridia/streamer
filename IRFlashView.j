@@ -41,6 +41,8 @@
 
 		_DOMObjectElement.appendChild(param);
 		[_paramElements setObject:param forKey:key];
+		
+		_DOMInnerObjectElement.setAttribute(key, [_params objectForKey:key]);
 	
 	}
 	
