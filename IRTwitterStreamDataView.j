@@ -54,7 +54,7 @@
 
 - (void) setSelected:(BOOL)selected animated:(BOOL)animated {
 	
-	CPLog(@"%@, object %@ was set selected? %x, animated? %x", self, [self objectValue], selected, animated);
+	//	CPLog(@"%@, object %@ was set selected? %x, animated? %x", self, [self objectValue], selected, animated);
 	
 }
 
@@ -75,8 +75,6 @@
 }
 
 + (CGFloat) preferredRowHeightForObject:(id)anObject width:(CGFloat)aWidth {
-	
-	CPLog(@"anObject %@", anObject);
 	
 	var bodySize = [IRDOMTextView sizeWithString:[anObject valueForKeyPath:@"text"] font:[CPFont systemFontOfSize:13.0] width:(aWidth || 0)];
 	

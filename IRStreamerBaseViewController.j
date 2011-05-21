@@ -38,8 +38,8 @@ var sidebarWidth = 224;
 	[leftView setFrame:CGRectMake(0, 0, 384, 512)];
 	[splitView addSubview:leftView];
 	
-	[streamingVideoController beginBroadcastingFromUStreamChannelNamed:@"nied-kyoshin01" withAPIKey:@"869AAF2EAB4DC4926A6A62396A68FADB"];
-	[twitterStreamViewController beginStreamingWithTerms:@"#PP17 OR from:punchparty OR from:OOBE"];
+	[streamingVideoController beginBroadcastingFromUStreamChannelNamed:@"machinima-live-stream" withAPIKey:@"869AAF2EAB4DC4926A6A62396A68FADB"];
+	[twitterStreamViewController beginStreamingWithTerms:@"#TEDxTokyo OR #PP17 OR from:punchparty OR from:OOBE"];
 	
 	var rightView = [twitterStreamViewController view];
 	[rightView setFrame:CGRectMake(0, 0, sidebarWidth, 512)];
@@ -76,3 +76,5 @@ var sidebarWidth = 224;
 }
 
 @end
+
+window.clog = function(anArray){ window.console.log.apply(console, anArray); };

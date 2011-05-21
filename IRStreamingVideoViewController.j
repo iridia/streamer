@@ -41,6 +41,7 @@
 @implementation IRStreamingVideoViewController : CPViewController {
 	
 	IRWebAPIEngine engine;
+	CPFlashView flashView;
 	
 }
 
@@ -59,6 +60,30 @@
 	
 	[self setView:[[CPView alloc] initWithFrame:CGRectMake(0, 0, 512, 512)]];
 	[[self view] setAutoresizingMask:CPViewWidthSizable|CPViewHeightSizable];	
+		
+}
+
+- (void) setupFlashViewWithChannelID:(CPString)anID {
+	
+	flashView = [[IRFlashView alloc] init];
+	[flashView setParameters:[CPDictionary dictionaryWithObjectsAndKeys:
+		@"true", @"allowfullscreen",
+		@"transparent", @"wmode",
+		@"always", @"allowscriptaccess",
+		@"true", @"swLiveConnect"
+	]];
+	[flashView setFlashVars:[CPDictionary dictionaryWithObjectsAndKeys:
+		@"bar", @"foo",
+		@"IRUStreamViewDefaultCallback", @"callbackName",
+		anID, @"channelID"
+	]];
+	
+	CPLog(@"flashView %@", [flashView flashVars]);
+	[flashView setFlashMovie:[CPFlashMovie flashMovieWithFile:[[CPBundle bundleForClass:[self class]] pathForResource:@"IRUStreamView.swf"]]];
+	[flashView setFrame:[[self view] bounds]];
+	[flashView setBackgroundColor:[CPColor blackColor]];
+	[flashView setAutoresizingMask:CPViewWidthSizable|CPViewHeightSizable];
+	[[self view] addSubview:flashView];
 	
 }
 
@@ -71,29 +96,19 @@
 	
 	] onSuccess:function (response) {
 		
-		var html = "", enumerator = [response objectEnumerator], o;
+		//	IRWebAPIKit and UStream API idiosyncrasy workaround
+		var html = @"", enumerator = [response objectEnumerator], o;
 		while (o = [enumerator nextObject]) html += o;
 		
 		var tempDiv = document.createElement('div');
 		tempDiv.innerHTML = html;
 		
-		var embedTag = tempDiv.getElementsByTagName("embed"), flashTag = embedTag[0];
+		//	foo=bar&lorem=ipsum to CPDictionary
+		var flashVars = [CPMutableDictionary dictionary];
+		[((tempDiv.getElementsByTagName("embed")[0]).getAttribute("flashvars")).split("&") enumerateObjectsUsingBlock:function(object, index){ var splitObjs = object.split("="); [flashVars setObject:splitObjs[1] forKey:splitObjs[0]]; }];
 		
-		var actualView = [[IRFlashView alloc] initWithFrame:CGRectMake(0, 0, 512, 512)];
-		[actualView setParameters:[CPDictionary dictionaryWithObjectsAndKeys:
-		
-			@"true", @"allowfullscreen",
-			@"always", @"allowscriptaccess",
-			flashTag.getAttribute("flashvars"), @"flashvars"
-		
-		]];
-		
-		[actualView setFlashMovie:[CPFlashMovie flashMovieWithFile:flashTag.getAttribute("src")]];
-		[actualView setFrame:[[self view] bounds]];
-		[actualView setBackgroundColor:[CPColor blackColor]];
-		[actualView setAutoresizingMask:CPViewWidthSizable|CPViewHeightSizable];
-		
-		[[self view] addSubview:actualView];
+		var channelID = [flashVars objectForKey:@"cid"];		
+		[self setupFlashViewWithChannelID:channelID];
 		
 	} failure:function () {
 		

@@ -7,6 +7,7 @@
 @implementation IRStreamerTwitterStreamViewController : IRTableViewController {
 	
 	IRTwitterSearch twitterSearch @accessors;
+	CPTimer timer @accessors;
 	
 }
 
@@ -17,15 +18,31 @@
 	[self setTwitterSearch:[IRTwitterSearch search]];
 	
 	[[self arrayController] setSortDescriptors:[CPArray arrayWithObject:[CPSortDescriptor sortDescriptorWithKey:@"id_str" ascending:NO]]];
+	[[self tableView] setSelectionHighlightStyle:CPTableViewSelectionHighlightStyleNone];
 	
 }
 
 - (void) beginStreamingWithTerms:(CPString)terms {
 	
-	[[self twitterSearch] fireSearchUsingTerms:terms callback:function(resp){
-		[[self arrayController] addObjects:resp];
-		[[self tableView] reloadData]; // TBD handle this gracefully memorizing offset et al in the future
-	}];
+	if (timer) 
+	return;
+	
+	var timerCallback = function(){
+		
+		[[self twitterSearch] fireSearchUsingTerms:terms callback:function(resp) {
+			
+			if (![resp count])
+			return;
+			
+			[[self arrayController] addObjects:resp];
+			[[self tableView] reloadData]; // TBD handle this gracefully memorizing offset et al in the future
+			
+		}];
+				
+	};
+	
+	[self setTimer:[CPTimer scheduledTimerWithTimeInterval:30.0 callback:timerCallback repeats:YES]];
+	timerCallback();
 	
 }
 
