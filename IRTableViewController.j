@@ -71,7 +71,7 @@
 
 - (void) viewDidLoad {
 	
-		[super viewDidLoad];
+	[super viewDidLoad];
 	
 	[[self view] setPostsFrameChangedNotifications:YES];
 	[[CPNotificationCenter defaultCenter] addObserver:self selector:@selector(handleViewFrameDidChange:) name:CPViewFrameDidChangeNotification object:[self view]];
