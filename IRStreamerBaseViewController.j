@@ -64,14 +64,15 @@ var sidebarVideoHeight = 178;
 	[altStreamingVideoController setMuted:YES];
 	[rightSplitView setAutoresizingMask:CPViewWidthSizable|CPViewHeightSizable];
 	[rightSplitView addSubview:[twitterStreamViewController view]];
-	[rightSplitView addSubview:[altStreamingVideoController view]];
+//	[rightSplitView addSubview:[altStreamingVideoController view]];
 	[rightView addSubview:rightSplitView];
 	[mainSplitView addSubview:rightView];
 	
-	[rightSplitView setDelegate:self];
+//	[rightSplitView setDelegate:self];
 	
-	[streamingVideoController beginBroadcastingFromUStreamChannelNamed:@"punchparty" withAPIKey:@"869AAF2EAB4DC4926A6A62396A68FADB"];
-	[altStreamingVideoController beginBroadcastingFromUStreamChannelNamed:@"machinima-live-stream" withAPIKey:@"869AAF2EAB4DC4926A6A62396A68FADB"];
+	[streamingVideoController beginBroadcastingFromUStreamChannelNamed:@"pp17" withAPIKey:@"869AAF2EAB4DC4926A6A62396A68FADB"];
+	[[streamingVideoController view] setBackgroundColor:[CPColor blackColor]];
+//	[altStreamingVideoController beginBroadcastingFromUStreamChannelNamed:@"machinima-live-stream" withAPIKey:@"869AAF2EAB4DC4926A6A62396A68FADB"];
 	[twitterStreamViewController beginStreamingWithTerms:@"#PP17 OR from:punchparty OR from:OOBE"];
 	
 }
