@@ -8,7 +8,7 @@ var sidebarWidth = 224;
 
 @implementation IRStreamerBaseViewController : CPViewController {
 		
-	CPSplitView splitView;
+	CPSplitView mainSplitView;
 	
 	IRStreamingVideoViewController streamingVideoController;
 	IRStreamerTwitterStreamViewController twitterStreamViewController;
@@ -29,52 +29,43 @@ var sidebarWidth = 224;
 
 - (void) loadView {
 	
-	splitView = [[CPSplitView alloc] initWithFrame:CGRectMake(0, 0, 512, 512)];
-	[splitView setIsPaneSplitter:YES];
-	[splitView setDelegate:self];
-	[self setView:splitView];
+	mainSplitView = [[CPSplitView alloc] initWithFrame:CGRectMake(0, 0, 512, 512)];
+	[mainSplitView setIsPaneSplitter:YES];
+	[mainSplitView setDelegate:self];
+	[self setView:mainSplitView];
 	
 	var leftView = [streamingVideoController view];
 	[leftView setFrame:CGRectMake(0, 0, 384, 512)];
-	[splitView addSubview:leftView];
+	[mainSplitView addSubview:leftView];
 	
 	[streamingVideoController beginBroadcastingFromUStreamChannelNamed:@"machinima-live-stream" withAPIKey:@"869AAF2EAB4DC4926A6A62396A68FADB"];
 	[twitterStreamViewController beginStreamingWithTerms:@"#TEDxTokyo OR #PP17 OR from:punchparty OR from:OOBE"];
 	
 	var rightView = [twitterStreamViewController view];
 	[rightView setFrame:CGRectMake(0, 0, sidebarWidth, 512)];
-	[splitView addSubview:rightView];
+	[mainSplitView addSubview:rightView];
 	
-}
-
-- (void) splitViewDidResizeSubviews:(CPNotification)notification {
-
-	[splitView setPosition:([splitView bounds].size.width - sidebarWidth) ofDividerAtIndex:0];
-
 }
 
 - (CPSplitView) view {
-	
-	return [super view];
-	
+	return [super view];	
 }
 
-
-
-
+- (void) splitViewDidResizeSubviews:(CPNotification)notification {
+	if ([notification object] == mainSplitView)
+	[mainSplitView setPosition:([mainSplitView bounds].size.width - sidebarWidth) ofDividerAtIndex:0];
+}
 
 - (CGFloat) splitView:(CPSplitView)aSplitView constrainMinCoordinate:(CGFloat)proposedPosition ofSubviewAt:(int)dividerIndex {
-
-	return [splitView bounds].size.width - sidebarWidth;
-
+	if (aSplitView == mainSplitView)	
+	return [mainSplitView bounds].size.width - sidebarWidth;
+	return proposedPosition;
 }
 
 - (CGFloat) splitView:(CPSplitView)aSplitView constrainMaxCoordinate:(CGFloat)proposedPosition ofSubviewAt:(int)dividerIndex {
-	
-	return [splitView bounds].size.width - sidebarWidth;
-
+	if (aSplitView == mainSplitView)
+	return [mainSplitView bounds].size.width - sidebarWidth;
+	return proposedPosition;
 }
 
 @end
-
-window.clog = function(anArray){ window.console.log.apply(console, anArray); };
