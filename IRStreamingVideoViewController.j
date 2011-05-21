@@ -42,6 +42,7 @@
 	
 	IRWebAPIEngine engine;
 	CPFlashView flashView;
+	BOOL muted @accessors;
 	
 }
 
@@ -75,10 +76,10 @@
 	[flashView setFlashVars:[CPDictionary dictionaryWithObjectsAndKeys:
 		@"bar", @"foo",
 		@"IRUStreamViewDefaultCallback", @"callbackName",
-		anID, @"channelID"
+		anID, @"channelID",
+		[self muted], @"viewerMuted"
 	]];
 	
-	CPLog(@"flashView %@", [flashView flashVars]);
 	[flashView setFlashMovie:[CPFlashMovie flashMovieWithFile:[[CPBundle bundleForClass:[self class]] pathForResource:@"IRUStreamView.swf"]]];
 	[flashView setFrame:[[self view] bounds]];
 	[flashView setBackgroundColor:[CPColor blackColor]];
@@ -108,7 +109,7 @@
 		[((tempDiv.getElementsByTagName("embed")[0]).getAttribute("flashvars")).split("&") enumerateObjectsUsingBlock:function(object, index){ var splitObjs = object.split("="); [flashVars setObject:splitObjs[1] forKey:splitObjs[0]]; }];
 		
 		var channelID = [flashVars objectForKey:@"cid"];		
-		[self setupFlashViewWithChannelID:channelID];
+		[self setupFlashViewWithChannelID:channelID];		
 		
 	} failure:function () {
 		

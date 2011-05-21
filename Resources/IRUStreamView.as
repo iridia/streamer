@@ -19,6 +19,7 @@ public class IRUStreamView extends Sprite {
 	private var logicClass:Class; // defaults to nil, loaded dynamically
 	private var viewer:Object; // loaded dynamically too
 	private var channelID:String; // defaults to nil
+	private var viewerMuted:Boolean = false; // defaults to NO
 	private var relativeURIPrefix:String = "";
 	private var callbackName:String; // defaults to nil, if exists, calls javascript function with this name
 	
@@ -31,6 +32,7 @@ public class IRUStreamView extends Sprite {
 		this.channelID = flashVars.channelID || null;
 		this.relativeURIPrefix = flashVars.relativeURIPrefix || "";
 		this.callbackName = flashVars.callbackName || null;
+		this.viewerMuted = flashVars.viewerMuted || this.viewerMuted;
 		
 		ExternalInterface.addCallback("setChannelID", this.setChannelID);
 		ExternalInterface.addCallback("getViewer", this.getViewer);
@@ -53,7 +55,7 @@ public class IRUStreamView extends Sprite {
 		
 		stage.addChild(loader);
 		loader.load(loaderRequest, loaderContext);
-		
+				
 	}
 	
 	private function handleRSLDidLoad():void {
@@ -63,7 +65,7 @@ public class IRUStreamView extends Sprite {
 		
 		this.updateViewer();
 		this.emitCallback("RSLLoaded", null);
-			
+					
 	}
 	
 	private function emitCallback(methodName:String, methodArguments:String):void {
@@ -91,8 +93,10 @@ public class IRUStreamView extends Sprite {
 		if (!this.viewer)
 		return;
 		
-		if (!this.viewer.channel)
-		this.viewer.createChannel(this.channelID, true);
+		if (!this.viewer.channel) {
+			this.viewer.createChannel(this.channelID, true);
+			this.viewer.muted = this.viewerMuted;
+		}
 		
 		this.handleResize(null);
 		
