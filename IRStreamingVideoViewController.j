@@ -82,7 +82,7 @@
 	
 	[flashView setFlashMovie:[CPFlashMovie flashMovieWithFile:[[CPBundle bundleForClass:[self class]] pathForResource:@"IRUStreamView.swf"]]];
 	[flashView setFrame:[[self view] bounds]];
-	[flashView setBackgroundColor:[CPColor blackColor]];
+	[flashView setBackgroundColor:[CPColor clearColor]];
 	[flashView setAutoresizingMask:CPViewWidthSizable|CPViewHeightSizable];
 	[[self view] addSubview:flashView];
 	
