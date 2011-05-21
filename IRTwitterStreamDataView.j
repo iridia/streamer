@@ -39,6 +39,8 @@
 	var ownBounds = [self bounds];
 	var paddedWidth = ownBounds.size.width - 20;
 	
+	[self setBackgroundColor:[CPColor whiteColor]];
+	
 	textView = [[IRDOMTextView alloc] initWithFrame:[self bounds]];
 	senderLabel = [CPTextField labelWithTitle:nil];
 	timeLabel = [CPTextField labelWithTitle:nil];
