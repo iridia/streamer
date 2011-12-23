@@ -1,6 +1,6 @@
 [submodule "Frameworks/IRWebAPIKit"]
 	path = Frameworks/IRWebAPIKit
-	url = https://github.com/iridia/IRWebAPIKit
+	url = git://github.com/iridia/IRWebAPIKit.git
 [submodule "Frameworks/IRBlockEnumeration"]
 	path = Frameworks/IRBlockEnumeration
 	url = git://github.com/iridia/IRBlockEnumeration.git
