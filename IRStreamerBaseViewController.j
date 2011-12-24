@@ -70,10 +70,10 @@ var sidebarVideoHeight = 178;
 	
 //	[rightSplitView setDelegate:self];
 	
-	[streamingVideoController beginBroadcastingFromUStreamChannelNamed:@"pp17" withAPIKey:@"869AAF2EAB4DC4926A6A62396A68FADB"];
+	[streamingVideoController beginBroadcastingFromUStreamChannelNamed:@"oobe-roadoshow" withAPIKey:@"869AAF2EAB4DC4926A6A62396A68FADB"];
 	[[streamingVideoController view] setBackgroundColor:[CPColor blackColor]];
 //	[altStreamingVideoController beginBroadcastingFromUStreamChannelNamed:@"machinima-live-stream" withAPIKey:@"869AAF2EAB4DC4926A6A62396A68FADB"];
-	[twitterStreamViewController beginStreamingWithTerms:@"#PP17 OR from:punchparty OR from:OOBE"];
+	[twitterStreamViewController beginStreamingWithTerms:@"#PPTF OR #PunchParty OR from:punchparty"];
 	
 }
 
